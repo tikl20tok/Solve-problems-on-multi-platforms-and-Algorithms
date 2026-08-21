@@ -70,6 +70,8 @@ int main()
     return 0;
 }
 
+//solution link: https://marisaoj.com/solution/407/all
+
 void ver1()
 {
     ios::sync_with_stdio(0);
