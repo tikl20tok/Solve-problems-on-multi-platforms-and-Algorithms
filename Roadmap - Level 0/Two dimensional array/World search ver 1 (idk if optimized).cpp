@@ -2,7 +2,7 @@
 #pragma GCC optimize("unroll-loops")
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
+
 
 
 int main()
@@ -19,7 +19,6 @@ int main()
     long long n,m;
     cin>>n>>m;
     string s;
-    cin>>s;
     vector<vector<char>> a(n+5,vector<char>(m+5));
     long long i,j;
     for (i=1;i<=n;i++)
@@ -29,6 +28,7 @@ int main()
             cin>>a[i][j];
         }
     }
+    cin>>s;
 
     string altstr;
     altstr.reserve(max(n,m)+5);
@@ -38,6 +38,7 @@ int main()
     //horizontal search
     if (s.size()<=m)
     {
+        //left to right
         for (i=1;i<=n;i++)
         {
             //get string
@@ -65,11 +66,40 @@ int main()
                 }
             }
         }
+        //right to left
+        for (i=n;i>=1;i--)
+        {
+            //get string
+            altstr.clear();
+            for (j=m;j>=1;j--)
+            {
+                altstr.push_back(a[i][j]);
+            }
+            bool check1;
+            for (x=0;x<=altstr.size()-s.size();x++)
+            {
+                check1=true;
+                for (y=0;y<s.size();y++)
+                {
+                    if (altstr[x+y]!=s[y])
+                    {
+                        check1=false;
+                        break;
+                    }
+                }
+                if (check1==true)
+                {
+                    cout<<"YES";
+                    return 0;
+                }
+            }
+        }
     }
 
     //vertical search
     if (s.size()<=n)
     {
+        //top to bottom
         for (j=1;j<=m;j++)
         {
             //get string
@@ -98,7 +128,35 @@ int main()
                 }
             }
         }
-
+        //bottom to top
+        for (j=m;j>=1;j--)
+        {
+            //get string
+            altstr.clear();
+            
+            for (i=n;i>=1;i--)
+            {
+                altstr.push_back(a[i][j]);
+            }
+            bool check1;
+            for (x=0;x<=altstr.size()-s.size();x++)
+            {
+                check1=true;
+                for (y=0;y<s.size();y++)
+                {
+                    if (altstr[x+y]!=s[y])
+                    {
+                        check1=false;
+                        break;
+                    }
+                }
+                if (check1==true)
+                {
+                    cout<<"YES";
+                    return 0;
+                }
+            }
+        }
     }
 
     if (kt==false)
