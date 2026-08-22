@@ -33,6 +33,7 @@ int main()
         when from right to left: i=i (0), j-=1 (-1)
         when from bottom to top: i-=1 (-1), j=j (0)
         -> define a direction array: dx[4]={0,1,0,-1}, dy[4]={1,0,-1,0}, index base on MOD4
+        -> define a direction array: dx[4]={0,1,0,-1}, dy[4]={1,0,-1,0}, index base on MOD4
         -> define formula when to change direction:
         out of bound: i<1 or i>n or j<1 or j>m, and has been visited: a[i][j]!=0
         */
