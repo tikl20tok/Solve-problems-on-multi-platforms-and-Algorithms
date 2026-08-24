@@ -81,6 +81,12 @@ MỤC ĐÍCH CHÍNH & BẢN CHẤT CỦA KMP / LPS:
    - Vòng lặp while đóng vai trò hạ nấc liên tục cho đến khi tìm được trạng thái mắc
      hoặc chạm đáy (len = 0).
 
+HOẶC 
+
+Không cần cố hiểu len=lps[len-1] làm gì
+Hiểu đơn giản nó là tìm độ dài lớn nhất match mà chứa kí tự tại index i hiện tại
+*/
+
 */
 
 //Sau khi KMP trên chính nó, KMP với xâu cần so sánh

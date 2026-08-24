@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//link đề: https://oj.vnoi.info/problem/SUBSTR, https://vnspoj.github.io/problems/SUBSTR.html(kèm code giải bài <giải theo cách 2>)
+//link đề: https://oj.vnoi.info/problem/SUBSTR, https://vnspoj.github.io/problems/SUBSTR.html (kèm code giải bài <giải theo cách 2>)
 /*
 Cho xâu A va xâu B chỉ gom cac chu cai thuong. Xau B đuoc goi la xuat hien tai vị tri i của xau A nếu: Ai = B1, Ai+1 = B2,..Ai+blength-1 = Bblength
 
@@ -28,9 +28,10 @@ Output:
 1 2 3 4
 
 */
-
-
-
+/*
+Không cần cố hiểu len=lps[len-1] làm gì
+Hiểu đơn giản nó là tìm độ dài lớn nhất match mà chứa kí tự tại index i hiện tại
+*/
 
 //Cách 1: áp dụng đầy đủ
 vector<long long> buildLPS(string s)
