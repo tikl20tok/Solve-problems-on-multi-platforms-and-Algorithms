@@ -3,6 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//link đề: https://oj.vnoi.info/problem/SUBSTR, https://vnspoj.github.io/problems/SUBSTR.html
 vector<long long> buildLPS(string s)
 {
     long long m=s.size();
@@ -77,6 +78,7 @@ int main()
     {
         cout<<firstindex[i]<<" ";
     }
+
 
 
 
