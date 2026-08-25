@@ -20,6 +20,7 @@ yêu cầu kiên quyết: pre phải luôn bắt đầu từ 0, suf luôn phải
 khi so sánh ví dụ: abab -> i=3 ->  pre: có aba, suf: có aba -> len =3;
 nhìn chung là truyền trạng thái của thằng lớn nhất, thay vì mỗi khi dịch i, ta phải trích và so sánh lại từ đầu
 */
+//Cách 1: Đúng cách, NHƯNG KHÓ HIỂU VCL
 vector<int> buildLPS(string P) {
     int m = P.length();
     vector<int> lps(m, 0);
@@ -50,7 +51,21 @@ vector<int> buildLPS(string P) {
     }
     return lps;
 }
-
+//Cách 2: Viết theo quy hoặc động, tại i nào, giải quyết dứt điểm, không truyền trạng thái lằng nhằng
+vector<int> buildLPS2(string s){
+    vector<int> lps(s.size(),0);
+    for (int i = 1; i < n; i++) {
+        int j = lps[i - 1];
+        while (j > 0 && s[i] != s[j]) {
+            j = lps[j - 1];
+        }
+        if (s[i] == s[j]) {
+            j++;
+        }
+        lps[i] = j;
+    }
+    return lps;
+}    
 /*
 rối não nhất:
 A. Sơ bộ
