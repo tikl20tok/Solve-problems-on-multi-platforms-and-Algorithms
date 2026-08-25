@@ -4,6 +4,22 @@
 using namespace std;
 
 //Về mặt bản chất, buildLPS là KMP trên chính nó (so sánh xâu bị shift 1 (1->cuối) đầu VỚI xâu gốc (0->cuối-1 do len)) NHƯNG max(len)<=m-1
+
+/*
+hiểu lps đơn giản: Tiền tố trùng hậu tố
+có index i
+từ 0->i, lấy từng đợt ra đc các tiền tố (prefix)
+từ i->0, xâu vẫn lấy thứ tự từ trái sang phải (suffix)
+ví dụ: abcdefg, i=4 = e
+-> pre: a; ab; abc; abcd
+-> suf: e; de; cde; bcde
+**size luôn <=4 (chỉ lấy đến i-3/1), cấm lấy toàn bộ bởi lấy toàn bộ là pre=suf, conflict
+
+yêu cầu kiên quyết: pre phải luôn bắt đầu từ 0, suf luôn phải bắt đầu từ cuối (nhưng lấy xâu theo thứ tự trái sang phải, ngược lại)
+
+khi so sánh ví dụ: abab -> i=3 ->  pre: có aba, suf: có aba -> len =3;
+nhìn chung là truyền trạng thái của thằng lớn nhất, thay vì mỗi khi dịch i, ta phải trích và so sánh lại từ đầu
+*/
 vector<int> buildLPS(string P) {
     int m = P.length();
     vector<int> lps(m, 0);
