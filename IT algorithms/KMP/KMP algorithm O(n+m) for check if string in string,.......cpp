@@ -51,21 +51,6 @@ vector<int> buildLPS(string P) {
     }
     return lps;
 }
-//Cách 2: Viết theo quy hoặc động, tại i nào, giải quyết dứt điểm, không truyền trạng thái lằng nhằng
-vector<int> buildLPS2(string s){
-    vector<int> lps(s.size(),0);
-    for (int i = 1; i < n; i++) {
-        int j = lps[i - 1];
-        while (j > 0 && s[i] != s[j]) {
-            j = lps[j - 1];
-        }
-        if (s[i] == s[j]) {
-            j++;
-        }
-        lps[i] = j;
-    }
-    return lps;
-}    
 /*
 rối não nhất:
 A. Sơ bộ
@@ -118,7 +103,73 @@ Không cần cố hiểu len=lps[len-1] làm gì
 Hiểu đơn giản nó là tìm độ dài lớn nhất match mà chứa kí tự tại index i hiện tại
 */
 
+
+//Cách 2: Viết theo quy hoặc động, tại i nào, giải quyết dứt điểm
+/*
+bản thân thằng này cũng như vòng while, được cái code ngắn và nhìn mạch lạc, rõ ràng hơn
+ở đây nhìn rõ hơn về function của lps[j-1], so sánh với tiền tố (xâu gốc) thì
+nó liên tục thử bỏ đoạn hợp lí ở dưới: ví dụ:
+abcde, đang có e, bỏ đoạn abc đi chả hạn còn de, bỏ liên tục đến khi tìm được cái hợp nhất
+Nó cắt được như vậy vì ta hiểu đơn giản với mỗi value của lps[], tức có 1 xâu con ngần ấy kí tự match
+Để hiểu rõ hơn và 1 ứng dụng để nhìn ra bản chất của j(len) = lps[j(len) - 1] thì "Finding Borders"
+
+Ta có mỗi lần so sánh tiền tố và hậu tố, để biết bằng nhau hay gì đó ắt phải CÙNG ĐỘ DÀI
+ở qhđ này, j có vai trò như len ở trên kia
+     0 1 2 3 4 5 6
+xâu: a b a b a b c
+tại i=1
+pre: a; suf: b ->false j=0
+i=2
+pre: ab; suf: ba -> false j=0
+i=3
+pre: aba; suf: bab
+Qua đây ta có nhận xét i liên tục tượng trưng cho KÍ TỰ CUỐI CÙNG của 1 suf
+Còn j = lps[i-1] -> Trạng thái trước có bao kí tự match, cụ thể ta đang lấy index+1 ở xâu gốc để so sánh tiếp, cái này tượng trưng luôn cho kí tự tiếp theo của pre trước đó
+Vậy là xong, hết, còn j=lps[j-1] thì hiểu là:
+Nhảy xuống TỪNG XÂU CON SUF ĐÃ MATCH mà CÓ CHỨA KÍ TỰ i HIỆN TẠI có khả năng (Nếu lps[] lớn hơn 0 và đã build xong)
+Còn trong vòng lặp nó có ý nghĩa tương tự nhưng do nếu missmatch thì chuyển CÓ CHỨA KÍ TỰ i-1 để cắt xuống thằng nào phù hợp
+Cắt dựa trên nguyên lí trùng trong xâu: Từ cuối xâu đi, sẽ có thằng nào trùng với thằng ké nó, lấy lượng nhỏ nhất bỏ đi rồi thử lại
+ví dụ: 
+ababababab, có 5 cụm ab, ta chỉ bỏ 1 cụm "ab" thành ababab (3ab), nếu bỏ 1 cụm "abab" thì sẽ gây giảm đi lượng trùng mà vẫn giống nhau
+ta giảm liên tục như thế đến khi nào mà cụm trung đó biến mất để lộ ra kí tự mới (có thể trùng i-1 hoặc khác i-1) để ta so sánh với s[i]
+
+Hiểu được DP này rồi ta dễ dàng hiểu đc KMP()
+Ví dụ thực tế: "Finding Borders"
+
+string s = "abababc"
+0 1 2 3 4 5 6
+a b a b a b c
+i: 1 j(len): 0 lps[1]: 0
+i: 2 j(len): 1 lps[2]: 1
+i: 3 j(len): 2 lps[3]: 2 đây 2 = "ab"
+i: 4 j(len): 3 lps[4]: 3 đây 3 = "aba"
+i: 5 j(len): 4 lps[5]: 4 đây 4 = "abab"
+i: 6 j(len): 2 lps[6]: 0 j = lps[4-1=3] = 2
+i: 6 j(len): 0 lps[6]: 0
+Đấy, ta thấy chỉ có "abab" trùng, cắt 1 "ab" đi, thật ra ta có thể mạnh tay cắt "abab" nhưng làm thế sẽ phá vỡ quy ước chung (ở trên)
+, loại bỏ hết trùng sẽ RA 1 KÍ KHÁC để xem khả thi ko nếu nối vào c HOẶC KO RA J -> ĐỨT CHUỖI
+Vậy ta đã chứng minh được định nghĩa được viết trên kia là ĐÚNG
 */
+vector<int> buildLPS2(string s){
+    long long n = s.size();
+    vector<int> lps(n,0);
+    long long tg=-1;
+    for (int i = 1; i < n; i++) {
+        int j = lps[i - 1];
+        while (j > 0 && s[i] != s[j]) {
+            j = lps[j - 1];
+            /*cout<<"i: "<<i<<" j(len): "<<j<<" lps["<<i<<"]: "<<lps[i]<<endl;
+            tg = j;*/
+        }
+        if (s[i] == s[j]) {
+            j++;
+        }
+        lps[i] = j;
+        /*if (tg!=j)
+            cout<<"i: "<<i<<" j(len): "<<j<<" lps["<<i<<"]: "<<lps[i]<<endl;*/
+    }
+    return lps;
+}    
 
 //Sau khi KMP trên chính nó, KMP với xâu cần so sánh
 bool KMP(string P, string T) { // P là xâu LỚN, T là xâu NHỎ cần kiểm tra
@@ -183,15 +234,12 @@ int main() {
 buildLPS:
 P="abababc"
 workflow: (sau i++)
-i len lps[i] P
-2 0 0 abababc
-3 1 0 abababc
-4 2 0 abababc
-5 3 0 abababc
-6 4 0 abababc//6 in ra nhưng....
-6 2 0 abababc//2 lần chỉ để tìm len phù hợp nhất
-6 0 0 abababc//2 lần chỉ để tìm len phù hợp nhất
-7 0 0 abababc
-0 0 1 2 3 4 0
+i: 1 j(len): 0 lps[1]: 0
+i: 2 j(len): 1 lps[2]: 1
+i: 3 j(len): 2 lps[3]: 2
+i: 4 j(len): 3 lps[4]: 3
+i: 5 j(len): 4 lps[5]: 4
+i: 6 j(len): 2 lps[6]: 0
+i: 6 j(len): 0 lps[6]: 0
 */
 
