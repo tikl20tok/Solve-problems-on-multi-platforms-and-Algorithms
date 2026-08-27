@@ -128,7 +128,8 @@ Còn j = lps[i-1] -> Trạng thái trước có bao kí tự match, cụ thể t
 Vậy là xong, hết, còn j=lps[j-1] thì hiểu là:
 Nhảy xuống TỪNG XÂU CON SUF ĐÃ MATCH mà CÓ CHỨA KÍ TỰ i HIỆN TẠI có khả năng (Nếu lps[] lớn hơn 0 và đã build xong)
 Còn trong vòng lặp nó có ý nghĩa tương tự nhưng do nếu missmatch thì chuyển CÓ CHỨA KÍ TỰ i-1 để cắt xuống thằng nào phù hợp
-Cắt dựa trên nguyên lí trùng trong xâu: Từ cuối xâu đi, sẽ có thằng nào trùng với thằng ké nó, lấy lượng nhỏ nhất bỏ đi rồi thử lại
+Cắt dựa trên nguyên lí:
+liệt kê 1 bảng pre và 1 mảng suf, duyệt cùng indx, = nhau thì tính
 ví dụ: 
 ababababab, có 5 cụm ab, ta chỉ bỏ 1 cụm "ab" thành ababab (3ab), nếu bỏ 1 cụm "abab" thì sẽ gây giảm đi lượng trùng mà vẫn giống nhau
 ta giảm liên tục như thế đến khi nào mà cụm trung đó biến mất để lộ ra kí tự mới (có thể trùng i-1 hoặc khác i-1) để ta so sánh với s[i]
@@ -146,9 +147,19 @@ i: 4 j(len): 3 lps[4]: 3 đây 3 = "aba"
 i: 5 j(len): 4 lps[5]: 4 đây 4 = "abab"
 i: 6 j(len): 2 lps[6]: 0 j = lps[4-1=3] = 2
 i: 6 j(len): 0 lps[6]: 0
-Đấy, ta thấy chỉ có "abab" trùng, cắt 1 "ab" đi, thật ra ta có thể mạnh tay cắt "abab" nhưng làm thế sẽ phá vỡ quy ước chung (ở trên)
-, loại bỏ hết trùng sẽ RA 1 KÍ KHÁC để xem khả thi ko nếu nối vào c HOẶC KO RA J -> ĐỨT CHUỖI
-Vậy ta đã chứng minh được định nghĩa được viết trên kia là ĐÚNG
+0 1 2 3 4 5 6 7 8 9 X XI
+a b c a b d a b c a b c
+cái này rõ hơn sao ko tụt mẹ về 0 khi miss
+chắc chắn "abcab" (0->4) match (6->X), tụt về 0 là lãng phí luôn đoạn "ab"
+nếu ta dùng len=lps[len-1] thì tụt về lps[5-1=4] = 2
+
+Hiểu đơn giản do quy hoạch động nên ắt gốc có nhiều trạng thái
+Khi duyệt mỗi i, ta sinh ra CÁC SUFFIX MỚI
+vậy len-1 bắt đầu tại mỗi i là nhảy đến đúng cái suf mà match theo index tăng dần của nó
+index tăng dần: Liệt kê hết pre và suf, đi từng index, giống thì nhét, Đấy là lõi của len-1
+và khi lps[len-1] =0 cũng có nghĩa suf đó tại i đó là đầu tiên
+Vậy là đã tránh việc duyệt lại trạng thái và tận dụng dữ liệu cũ
+Hiểu func của len=lps[len-1] là thế, ko thể đào sâu hơn đc, mấy cái trên kia đều là giả thiết và dương như sai
 */
 vector<int> buildLPS2(string s){
     long long n = s.size();

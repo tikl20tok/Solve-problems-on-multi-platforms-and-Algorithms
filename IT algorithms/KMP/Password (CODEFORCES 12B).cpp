@@ -60,6 +60,28 @@ int main()
     string s;
     cin>>s;
     ll n=s.size();
+    //build lps
+    vector<ll> lps(n,0);
+    ll i,j;
+    for (i=1;i<n;i++)
+    {
+        j=lps[i-1];
+        while (j>0&&s[i]!=s[j]){
+            j=lps[j-1];
+        }
+        if (s[i]==s[j])
+            j++;
+        lps[i]=j;
+    }
+    /*
+    ở đây thấy yêu cầu 1 xâu t có 3 điểm phải bằng nhau:
+    1 là tiền tổ
+    2 là hậu tố
+    3 là đoạn giữa (chẳng phải tiền tố cũng không phải hậu tổ, "Obelix"(trong đề))
+    từ 1 và 2-> dùng lps
+    Nhận thấy lps cũng build luôn tại i tức thoả mãn được cho điều kiện 2
+    Vậy là từ lps[n-1], nhảy lps=
+    */
     
 
 
