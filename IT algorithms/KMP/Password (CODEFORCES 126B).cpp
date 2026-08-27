@@ -34,7 +34,7 @@ You know the string s. Find the substring t or determine that such substring doe
 legend.
 
 Input
-You are given the string s whose length can vary from 1 to 10° (inclusive), consisting of small Latin letters.
+You are given the string s whose length can vary from 1 to 10^6 (inclusive), consisting of small Latin letters.
 
 Output
 Print the string t. If a suitable t string does not exist, then print "Just a legend" without the quotes.
@@ -46,8 +46,6 @@ fixprefixsuffix
 output
 fix
 */
-
-
 
 int main()
 {
@@ -79,13 +77,41 @@ int main()
     2 là hậu tố
     3 là đoạn giữa (chẳng phải tiền tố cũng không phải hậu tổ, "Obelix"(trong đề))
     từ 1 và 2-> dùng lps
+    4 là xâu con phải dài nhất (Asterix trong đề)
     Nhận thấy lps cũng build luôn tại i tức thoả mãn được cho điều kiện 2
-    Vậy là từ lps[n-1], nhảy lps=
+    Vậy là từ lấy lps[n-1] làm gốc, nhảy xuống len=lps[len-1] để lấy toàn bộ size, 
+    sau đó duyệt qua toàn bộ xâu xem có thằng nào trùng size đó không
+    Lưu ý: Không chỉ lấy len=lps[n-1] mà còn phải dịch xuống len=lps[len-1] không thì là thiếu
+    len=lps[n-1] đóng vai trò là đoạn suf có chứa đoạn cuối mà trùng nhau
     */
+    vector<bool> a(n+5,false);
+    j=lps[n-1];
+    while (j>0){
+        a[j]=true;
+        j=lps[j-1];
+    }
+    ll check=0;
+    for (i=1;i<n-1;i++){//Giải thích ở dưới
+        if (a[lps[i]]){
+            check=max(check,lps[i]);
+        }
+    }
     
-
-
-
+    /*
+    riêng kí tự cuối thì không cần kiểm tra vì nó sẽ phá vỡ quy tắc giống nhau hay không (xuất hiện lù lù ở cuối xâu nên check luôn đúng)
+    riêng với những cái while j=lps[j-1] thì không phá quy tắc bởi nó chỉ cho ra độ dài nhưng ko xuất hiện lộ liễu
+    rồi ta có thể so sánh với những cái còn lại mà hoàn toàn không để ý gì đến kt.
+    Ta chỉ cần đánh dấu các border cần check và duyệt đến n-1 
+    */
+    /*for (i=0;i<n;i++)
+        cout<<lps[i]<<" ";
+    cout<<"\n";*/
+    if (check){
+        for (i=0;i<check;i++)
+            cout<<s[i];
+    }
+    else
+        cout<<"Just a legend";
 
 
 
