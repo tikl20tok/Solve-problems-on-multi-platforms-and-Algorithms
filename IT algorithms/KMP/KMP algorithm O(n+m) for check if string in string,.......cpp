@@ -155,11 +155,22 @@ nếu ta dùng len=lps[len-1] thì tụt về lps[5-1=4] = 2
 
 Hiểu đơn giản do quy hoạch động nên ắt gốc có nhiều trạng thái
 Khi duyệt mỗi i, ta sinh ra CÁC SUFFIX MỚI
-vậy len-1 bắt đầu tại mỗi i là nhảy đến đúng cái suf mà match theo index tăng dần của nó
-index tăng dần: Liệt kê hết pre và suf, đi từng index, giống thì nhét, Đấy là lõi của len-1
+vậy lps[len-1] bắt đầu tại mỗi i là nhảy đến đúng cái suf mà match theo index tăng dần của nó
+index tăng dần: Liệt kê hết pre và suf, đi từng index, giống thì nhét, Đấy là lõi của lps[len-1]
 và khi lps[len-1] =0 cũng có nghĩa suf đó tại i đó là đầu tiên
 Vậy là đã tránh việc duyệt lại trạng thái và tận dụng dữ liệu cũ
-Hiểu func của len=lps[len-1] là thế, ko thể đào sâu hơn đc, mấy cái trên kia đều là giả thiết và dương như sai
+Tiếp nữa là tại mỗi i sẽ sinh ra các suf/pre mới, suf thì sẽ được coi là khác với mỗi i (có thể trùng) nhưng pre trình luôn khi i tăng lên r nên t ko nói
+ví dụ: 
+abcd
+ng ta thường nói n-1 thôi là các suf: d;cd;bcd
+nhưng đáng lẽ ra trong lps: i=
+1: b;
+2: c; bc;
+3: d; cd; bcd
+tại mỗi i, ta lùi len=lps[len-1] chỉ phục vụ cho cái chuỗi i đầu tiên của nó, ko liên quan gì đến n-1
+NHƯNG TA TẬN DỤNG CÁI suf trước để so sánh và nối thêm nếu = nhau, không thì cũng vứt
+
+Hiểu func của len=lps[len-1] là thế, ko thể đào sâu hơn đc, mấy cái trên kia đều là giả thiết và dường như sai (do sinh mấy cái ví dụ ko thể xảy ra,...)
 */
 vector<int> buildLPS2(string s){
     long long n = s.size();
