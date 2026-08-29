@@ -81,6 +81,7 @@ int main()
     j3=0 -> toàn bộ xâu
     Vậy ta suy ra được công thức:
     với mỗi j để tìm/biết được bao số 0 còn lại thì ta áp dụng: (n-1)-j +1(bù size) = n-j
+    Qua đây, ta nhìn được thêm về sự so sánh ảo diệu của KMP và một ứng dụng đã được phơi bày
     */
     j=lps[n-1];
     while (j>=0){//thêm cả số 0 vào nữa tính luôn cả xâu, xong việc
