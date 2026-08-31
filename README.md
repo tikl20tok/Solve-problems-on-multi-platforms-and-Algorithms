@@ -1,2 +1,3 @@
 # Marisa-OJ
-Tổng hợp các code tự giải trên nền tảng Marisa OJ
+Tổng hợp các code tự giải trên đa nền tảng, kèm thuật toán, bài giải, bài tập, giải thích,.....
+Nói chung cái gì cũng kĩ càng
