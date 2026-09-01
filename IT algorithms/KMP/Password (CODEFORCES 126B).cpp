@@ -6,17 +6,8 @@ using namespace std;
 //FULL AC
 //link: https://codeforces.com/problemset/problem/126/B
 /*
-Copy
 
-Copy
 
-input
-abcdabc
-
-output
-Just a legend
-
-Copy
 
 Asterix, Obelix and their temporary buddies Suffix and Prefix has finally found the Harmony temple. However, its doors were firmly locked
 and even Obelix had no luck opening them.
@@ -45,6 +36,12 @@ fixprefixsuffix
 
 output
 fix
+
+input
+abcdabc
+
+output
+Just a legend
 */
 
 int main()
