@@ -79,3 +79,9 @@ int main() {
 
     return 0;
 }
+/*
+để hiểu rõ hơn, ứng dụng + biến tấu -> đào sâu bản chất từng dòng code 1, dù thuật toán này nói gần như hết sạch ở trên r
+thì xem ví dụ những bài
+KMP và Z-algorithm trong đa số bài, gần như tất cả đều có thể thay thế cho nhau
+Khác ở chỗ phải biến tấu phức tạp hơn hay không
+*/
