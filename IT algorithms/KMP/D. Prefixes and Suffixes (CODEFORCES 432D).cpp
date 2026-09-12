@@ -63,7 +63,7 @@ int main()
     định nghĩa pre: 0->l-1
     SUF: |s|-1-l+1 = |s|-l -> |s|-1
     vậy là suf phải có đít là cuối xâu
-    -> chỉ cần nhảy j=lps[j-1] là xong 
+    -> chỉ cần nhảy j=lps[j-1] là xong với từng i
     in ra:
     li -> length
     ci -> số lần xuất hiện
