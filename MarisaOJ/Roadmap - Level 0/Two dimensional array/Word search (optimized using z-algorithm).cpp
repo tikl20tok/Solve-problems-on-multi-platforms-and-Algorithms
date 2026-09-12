@@ -2,9 +2,163 @@
 #pragma GCC optimize("unroll-loops")
 #include <bits/stdc++.h>
 using namespace std;
+#define ll long long
+
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    freopen("TESTING.INP","r",stdin);
+    freopen("TESTING.OUT","w",stdout);
+
+    ll n,m;
+    cin>>n>>m;
+    ll i,j;
+    vector<string> a(n+5, "");
+    for (i=0;i<n;i++){
+        cin>>a[i];
+    }
+    string s,k;
+    bool kt;
+    ll l,r;
+    cin>>s;
+    vector<ll> z(max(n,m)+5, 0);
+    //horizontal search
+    if (m >= s.size()){
+        for(i=0;i<n;i++){
+            //z-algorithm
+            k=s+"#"+a[i];//check if s in a[i]
+            l=0;r=0;
+            fill(z.begin(), z.end(), 0);//reset array
+            for(j=0;j<k.size();j++){
+                if(j<=r){
+                    z[j]=min(z[j-l], r-j+1);
+                }
+                while(j+z[j]<n && k[z[j]]==k[z[j] + j]){
+                    z[j]++;
+                }
+                if(j+z[j]-1>r){
+                    l=j;
+                    r=j+z[j]-1;
+                }
+            }
+            for(j=s.size()+1;j<k.size();j++){
+                if(z[j]==s.size()){
+                    kt=true;
+                    break;
+                }
+            }
+        }
+
+        //reverse
+        for (j=n-1;j>=0;j--){
+            l=0;r=0;
+            k=s+"#";
+            for(i=m-1;i>=0;i--){
+                k+=a[j][i];
+            }
+            //z-algorithm
+            fill(z.begin(), z.end(), 0);//reset array
+            for(i=0;i<k.size();i++){
+                if(i<=r){
+                    z[i]=min(z[i-l], r-i+1);
+                }
+                while(i+z[i]<=n && k[z[i]]==k[z[i] + i]){
+                    z[i]++;
+                }
+                if(i+z[i]-1>r){
+                    l=i;
+                    r=i+z[i]-1;
+                }
+            }
+            for(i=s.size()+1;i<k.size();i++){
+                if(z[i]==s.size()){
+                    kt=true;
+                    break;
+                }
+            }
+        }
+    }
+    if(kt==true){
+        cout<<"YES";
+        return 0;
+    }
+
+    //vertical search
+    if(s.size() <= n){
+        for (j=0;j<m;j++){
+            l=0;r=0;
+            k=s+"#";
+            for(i=0;i<n;i++){
+                k+=a[i][j];
+            }
+            //z-algorithm
+            fill(z.begin(), z.end(), 0);//reset array
+            for(i=0;i<k.size();i++){
+                if(i<=r){
+                    z[i]=min(z[i-l], r-i+1);
+                }
+                while(i+z[i]<=n && k[z[i]]==k[z[i] + i]){
+                    z[i]++;
+                }
+                if(i+z[i]-1>r){
+                    l=i;
+                    r=i+z[i]-1;
+                }
+            }
+            for(i=s.size()+1;i<k.size();i++){
+                if(z[i]==s.size()){
+                    kt=true;
+                    break;
+                }
+            }
+        }
+
+        //reverse
+        for (j=m-1;j>=0;j--){
+            l=0;r=0;
+            k=s+"#";
+            for(i=n-1;i>=0;i--){
+                k+=a[i][j];
+            }
+            //z-algorithm
+            fill(z.begin(), z.end(), 0);//reset array
+            for(i=0;i<k.size();i++){
+                if(i<=r){
+                    z[i]=min(z[i-l], r-i+1);
+                }
+                while(i+z[i]<=n && k[z[i]]==k[z[i] + i]){
+                    z[i]++;
+                }
+                if(i+z[i]-1>r){
+                    l=i;
+                    r=i+z[i]-1;
+                }
+            }
+            for(i=s.size()+1;i<k.size();i++){
+                if(z[i]==s.size()){
+                    kt=true;
+                    break;
+                }
+            }
+        }
+    }
+    if (kt){
+        cout<<"YES";
+        return 0;
+    }
+    cout<<"NO";
+
+
+    return 0;
+}
 
 
 
+
+//word search ver 1, not optimized, maybe >=^3
+/*
 int main()
 {
     ios::sync_with_stdio(0);
@@ -167,7 +321,7 @@ int main()
 
     return 0;
 }
-
+*/
 
 
 
