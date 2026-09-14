@@ -7,7 +7,7 @@ từ vị trí i đi lên, có bao kí tự của nó match đầu xâu
 thông thường ae cứ dùng 2 vòng for là ra nhưng sẽ lên đến n^2 (ngây thơ)
 
 vậy để giảm đpt về o(n) thì ta có:
-Cửa sổ L;R cực mạnh làm constraint
+Cửa sổ L;R cực mạnh làm constraint, chính xác ra là để ăn sái kết quả cũ rồi mở rộng
 
 vào trong code sẽ được giải thích từng phần
 */
@@ -44,6 +44,9 @@ vector<int> buildZ(const string& s) {
         giới hạn nó lại
 
         Vậy ta dùng phép min, lấy thằng nào nhỏ hơn: min(z[i - L], R - i + 1);
+                          L         i            R
+        [-----------------|---------|------------]
+                                     <-- R-i+1 -->
         */
 
         // Mở rộng bờ rào nếu còn trùng
