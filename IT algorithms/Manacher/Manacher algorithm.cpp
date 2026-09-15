@@ -121,6 +121,7 @@ int main()
     - lẻ: start + p[i] - 1 
     => -1 đơn giản vì tâm được tính 2 lần
     => còn chẵn thì 2 cái riêng biệt, ko cùng tâm, nên ko cần trừ
+    */
 
     return 0;
 }
