@@ -3,6 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
+//link đề: https://csp.vnoi.info/problem/csphn_lt_grobot
 /*
 mấu chốt sử dụng era, lấy spf
 với mỗi spf[i], sẽ cho ta thừa số ng tố nhỏ nhất của nó
