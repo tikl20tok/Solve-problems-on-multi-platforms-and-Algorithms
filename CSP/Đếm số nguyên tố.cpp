@@ -3,7 +3,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-
+//FULL AC
+//link: https://csp.vnoi.info/problem/cbn_prime_c2_p2
 int main()
 {
     ios::sync_with_stdio(false);
