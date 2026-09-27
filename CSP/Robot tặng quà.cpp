@@ -99,3 +99,76 @@ Chết người ko chỉ nằm ở thuật toán, mà còn nằm ở cách quả
 Vòng lặp khiến TLE cực mạnh, phải thêm nhiều cái tối ưu cho nó
 thuật toán ra đc 15p, còn debug cho TLE THÌ NHƯ COCK
 */
+//Bản tối ưu lại code:
+#pragma GCC optimize("O3")
+#pragma GCC optimize("unroll-loops")
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    freopen("TESTING.INP","r",stdin);
+    freopen("TESTING.OUT","w",stdout);
+
+    ll t,n;
+    cin>>t;
+    ll i,j;
+    ll MAX=1000000;
+    vector<ll> spf(MAX+5);
+    for(i=1;i<=MAX;i++){
+        spf[i]=i;
+        //cái này tránh cho việc j/=spf[j] bị /0
+    }
+    for(i=2;i*i<=MAX;i++){
+        if(spf[i]==i){
+            for(j=i*i;j<=MAX;j+=i){
+                if(spf[j]==j){
+                    spf[j]=i;
+                }
+            }
+        }
+    }
+    vector<ll> touched;
+    vector<ll> usnt(MAX+5,0);
+    touched.reserve(80000);
+while(t--)
+{
+    cin>>n;
+    ll x;
+    for(i=1;i<=n;i++){
+        cin>>x;
+        x=abs(x);
+        j=x;
+        ll last=-1;
+        while(j>1){//đoạn này còn xử luôn cả số nguyên tố rồi, NHƯNG CHƯA TÍNH 0
+            if(spf[j] !=last){
+                if(usnt[ spf[j] ] == 0)
+                    touched.push_back( spf[j] );
+                usnt[ spf[j] ]++;
+                last=spf[j];
+            }
+            j/=spf[j];
+        }
+        if(x==0){//tính riêng số 0
+            if(usnt[x]==0){
+                touched.push_back(x);
+            }
+            usnt[x]++;
+        }
+    }
+    ll d=0;//kết quả
+    ll temp0=usnt[0];
+    for(i=0;i<touched.size();i++){
+        if(touched[i])//phải khác 0 ms đc, tránh tính "0" 2 lần
+            d=max(d, usnt[touched[i]]);
+        usnt[touched[i]]=0;
+    }
+    cout<<d+temp0<<"\n";
+    touched.clear();
+}
+    return 0;
+}
