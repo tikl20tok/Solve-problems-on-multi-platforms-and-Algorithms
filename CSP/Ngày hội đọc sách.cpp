@@ -35,7 +35,7 @@ int main()
     for(i=1;i<=n;i++){
         if(i*b>t)
             break;
-        slmcl=min(i, (t-i*b)/(a-b));//cứ thấy cái điều kiện nào là ép luôn, lúc test ví dụ đề thì ko min sẽ sai nhưng t vẫn chưa c/m đc sao thêm min, thôi thì cứ gặp bài nào thấy restraint nào là ép luôn, ko thừa
+        slmcl=min(i, (t-i*b)/(a-b));//nếu thời gian quá dư giả thì có thể đọc nhiều hơn RẤT RẤT NHIỀU nhưng chỉ tối đa i sách thôi nên phải ép min
         maxi=max(maxi, pre[i]-pre[i-slmcl]);
     }
     cout<<maxi;
